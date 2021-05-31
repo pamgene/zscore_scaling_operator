@@ -1,9 +1,32 @@
 library(tercen)
 library(dplyr)
 
-(ctx = tercenCtx())  %>% 
-  select(.y, .ci, .ri) %>% 
-  group_by(.ci, .ri) %>%
-  summarise(median = median(.y)) %>%
+do.scale = function(df, new_col_name) {
+  value                    <- df$.y - mean(df$.y, na.rm = TRUE)
+  value                    <- value/sd(value, na.rm = TRUE)
+  value[!is.finite(value)] <- NaN 
+  result                   <- cbind(df, value)
+  colnames(result)         <- c(colnames(df), new_col_name)
+  result
+}
+
+ctx = tercenCtx()
+
+dimension <- ifelse(is.null(ctx$op.value('Dimension')), 'Row', as.character(ctx$op.value('Dimension')))
+
+data <- ctx %>% 
+  select(.ci, .ri, .y)
+
+if (dimension == "Row") {
+  data <- data %>% group_by(.ri)
+} else if (dimension == "Column") {
+  data <- data %>% group_by(.ci)
+} else {
+  stop("Invalid option for dimension")
+}
+
+new_col_name <- paste(dimension, "Scale", sep = ".")
+data %>% 
+  do(do.scale(., new_col_name)) %>%
   ctx$addNamespace() %>%
   ctx$save()
