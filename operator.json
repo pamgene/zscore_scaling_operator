@@ -1,30 +1,18 @@
 {
-  "name": "Template R operator",
-  "description": "Return the medium value of a cell",
-  "tags": ["template"],
+  "name": "Z-score scaling",
+  "description": "Calculates the z score for all data points. ",
+  "tags": ["pamgene"],
   "authors": ["tercen"],
-  "urls": ["https://github.com/tercen/template_R_operator"],
+  "urls": ["https://github.com/tercen/two_sample_ttest_operator"],
   "properties": [
-   {
-    "kind": "StringProperty",
-    "name": "string_example",
-    "defaultValue": "example",
-    "description": "description parameter 1"
-    },
-    {
+  {
     "kind": "EnumeratedProperty",
-    "name": "list_example",
-    "defaultValue": "value1",
-    "values": [
-      "value1",
-      "StringProperty",
-      "DoubleProperty",
-      "BooleanProperty",
-      "EnumeratedProperty"
-    ],
-    "description": "description parameter 2"
-  }
-  ]
+    "name": "Dimension",
+    "defaultValue": "Row",
+    "description": "whether the scaled values should be calculated based on rows (spots) or columns (arrays)",
+	  "values": [
+      "Row",
+      "Column"
+      ]
+  } ]
 }
-
-
