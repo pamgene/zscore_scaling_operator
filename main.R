@@ -1,15 +1,6 @@
 library(tercen)
 library(dplyr)
 
-do.scale = function(df, new_col_name) {
-  value                    <- df$.y - mean(df$.y, na.rm = TRUE)
-  value                    <- value/sd(value, na.rm = TRUE)
-  value[!is.finite(value)] <- NaN 
-  result                   <- cbind(df, value)
-  colnames(result)         <- c(colnames(df), new_col_name)
-  result
-}
-
 ctx = tercenCtx()
 
 dimension <- ifelse(is.null(ctx$op.value('Dimension')), 'Row', as.character(ctx$op.value('Dimension')))
@@ -26,7 +17,9 @@ if (dimension == "Row") {
 }
 
 new_col_name <- paste(dimension, "Scale", sep = ".")
-data %>% 
-  do(do.scale(., new_col_name)) %>%
+data %>%
+  mutate(z = scale(.y) %>% as.numeric() ) %>%
+  ungroup(.) %>%
+  select(.ri, .ci, !!new_col_name := z) %>%
   ctx$addNamespace() %>%
   ctx$save()
