@@ -3,16 +3,14 @@
   "description": "Calculates the z score for all data points. ",
   "tags": ["pamgene"],
   "authors": ["tercen"],
-  "urls": ["https://github.com/tercen/zscore_scaling_operator"],
+  "urls": ["https://github.com/pamgene/zscore_scaling_operator"],
   "properties": [
-  {
-    "kind": "EnumeratedProperty",
-    "name": "Dimension",
-    "defaultValue": "Row",
-    "description": "whether the scaled values should be calculated based on rows (spots) or columns (arrays)",
-	  "values": [
-      "Row",
-      "Column"
-      ]
-  } ]
+    {
+      "kind": "EnumeratedProperty",
+      "name": "Dimension",
+      "defaultValue": "Row",
+      "description": "whether the scaled values should be calculated based on rows (spots) or columns (arrays)",
+      "values": ["Row", "Column"]
+    }
+  ]
 }
